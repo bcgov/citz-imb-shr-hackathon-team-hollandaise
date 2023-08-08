@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  #############################################################################################
+  ###                                         API                                           ###
+  #############################################################################################
+ hollandaise-api:
+    container_name: hollandaise-api
+    build:
+      context: ./src/backend
+      dockerfile: .docker/Dockerfile
+    volumes:
+    networks:
+      - hollandaise-network
+    ports:
+  
+  #############################################################################################
+  ###                                       Frontend                                        ###
+  #############################################################################################
+  hollandaise-webapp:
+    container_name: hollandaise-webapp
+    build:
+      context: ./src/frontend
+      dockerfile: .docker/Dockerfile
+    networks:
+      - hollandaise-network
+    ports:
+  
+networks:
+  hollandaise-network: 
+    driver: "bridge"
