@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Application/Root
+.env
+**/node_modules
+**/build
+**/package-lock.json

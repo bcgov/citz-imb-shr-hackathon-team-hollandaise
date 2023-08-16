@@ -29,6 +29,34 @@ services:
     ports:
       - ${FRONTEND_PORT:-9000}:9000
 
+  #############################################################################################
+  ###                                       Database                                        ###
+  #############################################################################################
+  hollandaise-database:
+    container_name: hollandaise-database
+    tty: true
+    image: postgres:13.9
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-postgres}"] # Check if PostgreSQL is ready.
+      interval: 15s # Perform the health check every 15 seconds.
+      timeout: 5s # Consider the health check a failure if it takes more than 5 seconds.
+      retries: 5 # Retry the health check up to 5 times before considering the container unhealthy.
+    environment:
+      - POSTGRES_USER=${DATABASE_USER:-postgres}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-postgres}
+      - POSTGRES_DB=${DATABASE_NAME:-project}
+    networks:
+      - hollandaise-network
+    ports:
+      - ${DATABASE_PORT:-9005}:5432
+    volumes:
+      - database-data:/var/lib/postgresql/data # Named volume binded to Postgres' data store directory.
+
+volumes:
+  database-data:
+    driver: local # Stores the volume data on the host machine's file system.
+
 networks:
   hollandaise-network:
     driver: "bridge"
