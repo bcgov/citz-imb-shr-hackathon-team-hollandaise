@@ -1,0 +1,12 @@
+{
+    "name": "Hollandiase",
+    "version": "1.0.0",
+    "description": "Hollandiase Application",
+    "license": "ISC",
+    "scripts": {    
+    "init": "cd src/frontend && npm i && cd ../src/backend && npm i",
+    "up": "docker compose up -d",
+    "down": "docker compose down",
+    "prune": "docker compose down --rmi all --volumes"
+  }
+}

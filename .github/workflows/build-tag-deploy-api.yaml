@@ -1,4 +1,4 @@
-name: Build Hollandiase API
+name: Build Hollandaise API
 
 on:
   push:
