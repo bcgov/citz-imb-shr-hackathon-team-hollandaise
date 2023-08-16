@@ -3,28 +3,32 @@ services:
   #############################################################################################
   ###                                         API                                           ###
   #############################################################################################
- hollandaise-api:
-    container_name: hollandaise-api
-    build:
-      context: ./src/backend
-      dockerfile: .docker/Dockerfile
-    volumes:
-    networks:
-      - hollandaise-network
-    ports:
-  
+  # hollandaise-api:
+  #   container_name: hollandaise-api
+  #   build:
+  #     context: ./src/backend
+  #     dockerfile: ./src/backend/.docker/Dockerfile
+  #   networks:
+  #     - hollandaise-network
+  #   ports:
+  #     - ${BACKEND_PORT:-9002}:9002
+
   #############################################################################################
   ###                                       Frontend                                        ###
   #############################################################################################
   hollandaise-webapp:
     container_name: hollandaise-webapp
+    tty: true
+    restart: on-failure
     build:
       context: ./src/frontend
+      target: dev
       dockerfile: .docker/Dockerfile
     networks:
       - hollandaise-network
     ports:
-  
+      - ${FRONTEND_PORT:-9000}:9000
+
 networks:
-  hollandaise-network: 
+  hollandaise-network:
     driver: "bridge"
