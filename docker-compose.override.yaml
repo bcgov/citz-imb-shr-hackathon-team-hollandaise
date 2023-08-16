@@ -1,0 +1,11 @@
+services:
+  # hollandaise-api:
+  #   build:
+  #     target: dev
+  #   volumes:
+  #     - ./src/backend:/usr/src/app
+  hollandaise-frontend:
+    build:
+      target: dev
+    volumes:
+      - ./src/frontend/src:/usr/src/app/src
