@@ -22,7 +22,7 @@ services:
       - DEBUG=${DEBUG:-false}
       - PORT=${BACKEND_PORT:-9002}
       - FRONTEND_PORT=${FRONTEND_PORT:-9000}
-      - PGHOST=${DATABASE_HOST:-database} # Name of the database container.
+      - PGHOST=${DATABASE_HOST:-hollandaise-database} # Name of the database container.
       - PGUSER=${DATABASE_USER:-postgres}
       - PGPASSWORD=${DATABASE_PASSWORD:-postgres}
       - PGDATABASE=${DATABASE_NAME:-project}
@@ -34,19 +34,57 @@ services:
       - hollandaise-network
     ports:
       - ${BACKEND_PORT:-9002}:9002
+    depends_on:
+      hollandaise-database:
+        condition: service_healthy
   
   #############################################################################################
   ###                                       Frontend                                        ###
   #############################################################################################
-  hollandaise-webapp:
-    container_name: hollandaise-webapp
+  hollandaise-frontend:
+    container_name: hollandaise-frontend
+    tty: true
+    restart: on-failure
     build:
       context: ./src/frontend
+      target: dev
       dockerfile: .docker/Dockerfile
     networks:
       - hollandaise-network
     ports:
-  
+      - ${FRONTEND_PORT:-9000}:9000
+    depends_on:
+      hollandaise-api:
+        condition: service_healthy
+
+  #############################################################################################
+  ###                                       Database                                        ###
+  #############################################################################################
+  hollandaise-database:
+    container_name: hollandaise-database
+    tty: true
+    image: postgres:13.9
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-postgres}"] # Check if PostgreSQL is ready.
+      interval: 15s # Perform the health check every 15 seconds.
+      timeout: 5s # Consider the health check a failure if it takes more than 5 seconds.
+      retries: 5 # Retry the health check up to 5 times before considering the container unhealthy.
+    environment:
+      - POSTGRES_USER=${DATABASE_USER:-postgres}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-postgres}
+      - POSTGRES_DB=${DATABASE_NAME:-project}
+    networks:
+      - hollandaise-network
+    ports:
+      - ${DATABASE_PORT:-9005}:5432
+    volumes:
+      - database-data:/var/lib/postgresql/data # Named volume binded to Postgres' data store directory.
+
+volumes:
+  database-data:
+    driver: local # Stores the volume data on the host machine's file system.
+
 networks:
-  hollandaise-network: 
+  hollandaise-network:
     driver: "bridge"
