@@ -6,10 +6,8 @@
   "scripts": {
     "dev": "nodemon -L --exec ts-node index.ts",
     "build": "tsc",
-    "typeorm": "typeorm-ts-node-commonjs -d dataSource.ts",
-    "create-entity": "typeorm-ts-node-commonjs entity:create",
-    "create-migration": "typeorm-ts-node-commonjs migration:create -n",
-    "create-subscriber": "typeorm-ts-node-commonjs subscriber:create"
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js ",
+    "create-migration": "npm run typeorm -- migration:create"
   },
   "devDependencies": {
     "@types/cookie-parser": "1.4.3",
