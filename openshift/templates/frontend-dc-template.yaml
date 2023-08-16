@@ -1,1 +1,88 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: ${APPLICATION_NAME}-template
+labels:
+  template: ${APPLICATION_NAME}-template
+objects:
+- kind: DeploymentConfig
+  apiVersion: apps.openshift.io/v1
+  metadata:
+    annotations:
+      app.openshift.io/route-disabled: 'false'
+      openshift.io/generated-by: OpenShiftWebConsole
+    resourceVersion: '7398711362'
+    name: hollandaise-frontend
+    namespace: ec1236-test
+    labels:
+      app: hollandaise-frontend
+      app.kubernetes.io/component: hollandaise-frontend
+      app.kubernetes.io/instance: hollandaise-frontend
+      app.kubernetes.io/name: hollandaise-frontend
+      app.kubernetes.io/part-of: hollandaise
+      app.openshift.io/runtime: nodejs
+      app.openshift.io/runtime-namespace: ec1236-test
+      app.openshift.io/runtime-version: latest
+  spec:
+    strategy:
+      type: Rolling
+      rollingParams:
+        updatePeriodSeconds: 1
+        intervalSeconds: 1
+        timeoutSeconds: 600
+        maxUnavailable: 25%
+        maxSurge: 25%
+      resources: {}
+      activeDeadlineSeconds: 21600
+    triggers:
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - hollandaise-frontend
+          from:
+            kind: ImageStreamTag
+            namespace: ec1236-test
+            name: 'hollandaise-frontend:latest'
+          lastTriggeredImage: >-
+            image-registry.openshift-image-registry.svc:5000/ec1236-test/hollandaise-frontend@sha256:05ec4a90a29961094f571a2cc877e962d72b58a0c92bd1944b4bdd30335fc9cf
+      - type: ConfigChange
+    replicas: 1
+    revisionHistoryLimit: 10
+    test: false
+    selector:
+      app: hollandaise-frontend
+      deploymentconfig: hollandaise-frontend
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: hollandaise-frontend
+          deploymentconfig: hollandaise-frontend
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+      spec:
+        containers:
+          - name: hollandaise-frontend
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/ec1236-test/hollandaise-frontend@sha256:05ec4a90a29961094f571a2cc877e962d72b58a0c92bd1944b4bdd30335fc9cf
+            ports:
+              - containerPort: 9000
+                protocol: TCP
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            imagePullPolicy: IfNotPresent
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        securityContext: {}
+        schedulerName: default-scheduler
+
+parameters:
+  - description: Application Name
+    displayName: AppName
+    name: APPLICATION_NAME
+    required: true
+    value: hollandaise-frontend
 
