@@ -3,15 +3,37 @@ services:
   #############################################################################################
   ###                                         API                                           ###
   #############################################################################################
- hollandaise-api:
+  hollandaise-api:
     container_name: hollandaise-api
+    tty: true
+    init: true # Properly handles running as PID 1 inside a container. Source: https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#handling-kernel-signals
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "node", "/usr/src/app/healthcheck.js"] # Check health endpoint for healthy service.
+      interval: 30s # Perform the health check every 30 seconds.
+      timeout: 10s # Consider the health check a failure if it takes more than 10 seconds.
+      retries: 5 # Retry the health check up to 5 times before considering the container unhealthy.
     build:
       context: ./src/backend
       dockerfile: .docker/Dockerfile
-    volumes:
+      target: dev
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-local}
+      - DEBUG=${DEBUG:-false}
+      - PORT=${BACKEND_PORT:-9002}
+      - FRONTEND_PORT=${FRONTEND_PORT:-9000}
+      - PGHOST=${DATABASE_HOST:-database} # Name of the database container.
+      - PGUSER=${DATABASE_USER:-postgres}
+      - PGPASSWORD=${DATABASE_PASSWORD:-postgres}
+      - PGDATABASE=${DATABASE_NAME:-project}
+      - PGPORT=5432
+      - SSO_AUTH_SERVER_URL=${SSO_AUTH_SERVER_URL}
+      - SSO_CLIENT_ID=${SSO_CLIENT_ID}
+      - SSO_CLIENT_SECRET=${SSO_CLIENT_SECRET}
     networks:
       - hollandaise-network
     ports:
+      - ${BACKEND_PORT:-9002}:9002
   
   #############################################################################################
   ###                                       Frontend                                        ###
