@@ -6,8 +6,6 @@ WORKDIR /usr/src/app
 # Copy files - ignores files from .dockerignore file.
 COPY . .
 
-RUN npm ci --cache /root/.npm
-
 # ================================= #
 # 🐳🐳       DEV BUILD       🐳🐳 #
 # ================================= #
