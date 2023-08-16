@@ -1,4 +1,4 @@
-name: Build Hollandiase Frontend
+name: Build Hollandaise Frontend
 
 on:
   push:
