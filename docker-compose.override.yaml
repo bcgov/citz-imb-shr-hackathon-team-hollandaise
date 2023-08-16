@@ -1,9 +1,9 @@
 services:
-  # hollandaise-api:
-  #   build:
-  #     target: dev
-  #   volumes:
-  #     - ./src/backend:/usr/src/app
+  hollandaise-api:
+    build:
+      target: dev
+    volumes:
+      - ./src/backend/src:/usr/src/app/src
   hollandaise-frontend:
     build:
       target: dev
