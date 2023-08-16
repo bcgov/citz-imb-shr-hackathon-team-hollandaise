@@ -50,7 +50,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy static assets from build stage.
-COPY --from=prod-base /app/build .
+COPY --from=prod-base /usr/src/app/build .
 
 # Provide nginx directory the required permissions.
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
