@@ -8,6 +8,9 @@ import config from './config';
 import { keycloak } from '@bcgov/keycloak-express';
 import { activateUser } from './src/utils';
 
+import { default as healthRouter } from './src/modules/health/router';
+import { default as configRouter } from './src/modules/config/router';
+
 const { OPENAPI_OPTIONS, CORS_OPTIONS, RATE_LIMIT_OPTIONS } = config;
 
 // Define Express App
@@ -37,7 +40,7 @@ app.use(cookieParser());
 app.disable('x-powered-by');
 
 // Routing
-app.use('/health', routers.healthRouter);
-app.use('/config', routers.configRouter);
+app.use('/health', healthRouter);
+app.use('/config', configRouter);
 
 export default app;
