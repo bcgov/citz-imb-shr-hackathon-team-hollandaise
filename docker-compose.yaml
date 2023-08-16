@@ -16,8 +16,8 @@ services:
   #############################################################################################
   ###                                       Frontend                                        ###
   #############################################################################################
-  hollandaise-webapp:
-    container_name: hollandaise-webapp
+  hollandaise-frontend:
+    container_name: hollandaise-frontend
     tty: true
     restart: on-failure
     build:
