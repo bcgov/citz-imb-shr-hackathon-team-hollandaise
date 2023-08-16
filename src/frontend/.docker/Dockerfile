@@ -6,8 +6,6 @@ WORKDIR /usr/src/app
 # Copy the frontend build artifacts into the container
 COPY . .
 
-RUN npm ci --cache /root/.npm
-
 # ================================= #
 # 🐳🐳       DEV BUILD       🐳🐳 #
 # ================================= #
