@@ -9,4 +9,18 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, '/src/frontend/src') }],
   },
+  build: {
+    outDir: 'build',
+  },
+  server: {
+    host: true,
+    port: 9000,
+    proxy: {
+      '/api': {
+        target: 'http://hollandaise-api:9002/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 });
