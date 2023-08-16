@@ -1,1 +1,113 @@
-TODO
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: ${APPLICATION_NAME}-template
+labels:
+  template: ${APPLICATION_NAME}-template
+objects:
+- kind: DeploymentConfig
+  apiVersion: apps.openshift.io/v1
+  metadata:
+    annotations:
+      app.openshift.io/route-disabled: 'false'
+      openshift.io/generated-by: OpenShiftWebConsole
+    resourceVersion: '7398711362'
+    name: hollandaise-api
+    namespace: ec1236-test
+    labels:
+      app: hollandaise-api
+      app.kubernetes.io/component: hollandaise-api
+      app.kubernetes.io/instance: hollandaise-api
+      app.kubernetes.io/name: hollandaise-api
+      app.kubernetes.io/part-of: hollandaise
+      app.openshift.io/runtime: nodejs
+      app.openshift.io/runtime-namespace: ec1236-test
+      app.openshift.io/runtime-version: latest
+  spec:
+    strategy:
+      type: Rolling
+      rollingParams:
+        updatePeriodSeconds: 1
+        intervalSeconds: 1
+        timeoutSeconds: 600
+        maxUnavailable: 25%
+        maxSurge: 25%
+      resources: {}
+      activeDeadlineSeconds: 21600
+    triggers:
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - hollandaise-api
+          from:
+            kind: ImageStreamTag
+            namespace: ec1236-test
+            name: 'hollandaise-api:latest'
+          lastTriggeredImage: >-
+            image-registry.openshift-image-registry.svc:5000/ec1236-test/hollandaise-api@sha256:05ec4a90a29961094f571a2cc877e962d72b58a0c92bd1944b4bdd30335fc9cf
+      - type: ConfigChange
+    replicas: 1
+    revisionHistoryLimit: 10
+    test: false
+    selector:
+      app: hollandaise-api
+      deploymentconfig: hollandaise-api
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: hollandaise-api
+          deploymentconfig: hollandaise-api
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+      spec:
+        containers:
+          - name: hollandaise-api
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/ec1236-test/hollandaise-api@sha256:05ec4a90a29961094f571a2cc877e962d72b58a0c92bd1944b4bdd30335fc9cf
+            ports:
+              - containerPort: 9002
+                protocol: TCP
+            env:
+              - name: ENVIRONMENT
+                value: prod
+              - name: DEBUG
+                value: 'true'
+              - name: BACKEND_PORT
+                value: '9002'
+              - name: FRONTEND_PORT
+                value: '9000'
+              - name: DATABASE_PORT
+                value: '9005'
+              - name: DATABASE_HOST
+                value: postgres
+              - name: DATABASE_USER
+                value: hollandaise_user
+              - name: DATABASE_PASSWORD
+                value: qgjYNNUvPyhw6vnuic9R
+              - name: DATABASE_NAME
+                value: hollandaise
+              - name: SSO_AUTH_SERVER_URL
+                value: >-
+                  https://dev.loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect
+              - name: SSO_CLIENT_ID
+                value: citz-imb-august-hack-4988
+              - name: SSO_CLIENT_SECRET
+                value: x81aNtKascwgwFvGF610E5BOYoNJ69fo
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            imagePullPolicy: IfNotPresent
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        securityContext: {}
+        schedulerName: default-scheduler
+
+parameters:
+  - description: Application Name
+    displayName: AppName
+    name: APPLICATION_NAME
+    required: true
+    value: hollandaise-api
