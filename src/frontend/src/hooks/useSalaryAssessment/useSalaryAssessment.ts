@@ -2,19 +2,21 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getSalaryAssessment, postSalaryAssessment } from "@/api";
-import { SalaryAssessment } from "../../types";
+import { SalaryAssessment } from "@/types";
 
 export const useSalaryAssessment = () => {
   const queryClient = useQueryClient();
-  
-  const { data, isLoading, isError } = useQuery<SalaryAssessment>(
-    "salaryAssessment",
-    getSalaryAssessment
+
+  const { data, isLoading, isError } = useQuery<SalaryAssessment>({
+    queryKey: ["salaryAssessment"],
+    queryFn: getSalaryAssessment,
+  }
+
   );
 
   const mutation = useMutation(postSalaryAssessment, {
     onSuccess: () => {
-      queryClient.invalidateQueries("salaryAssessment");
+      queryClient.invalidateQueries(["salaryAssessment"]);
     },
   });
 
