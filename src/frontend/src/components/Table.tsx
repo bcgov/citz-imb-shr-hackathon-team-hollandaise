@@ -1,4 +1,5 @@
 import { useSalaryAssessment } from '@/hooks';
+import ProductTable from '@/components/products/ProductTable';
 
 const Table = () => {
   const { data, isError, isLoading } = useSalaryAssessment();
@@ -14,7 +15,7 @@ const Table = () => {
   if (isError) {
     return (
       <div className="w-full">
-        <p className="text-4xl text-center text-gray-500">Error: Loading data</p>
+        <p className="text-4xl text-center text-gray-500">Error while Loading data</p>
       </div>
     );
   }
@@ -23,7 +24,7 @@ const Table = () => {
 
   return (
     <div className="w-full">
-      <p className="text-4xl text-center text-gray-500">You are logged in.</p>
+      <ProductTable />
     </div>
   );
 };
