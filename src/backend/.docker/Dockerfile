@@ -35,7 +35,7 @@ RUN npm run build
 FROM node:18.17-alpine as prod
 ENV NODE_ENV=production
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Npm install packages. Omits dev dependencies when NODE_ENV=production
 COPY --from=prod-build /usr/src/app/package.json ./package.json
