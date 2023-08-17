@@ -35,17 +35,6 @@ objects:
       resources: {}
       activeDeadlineSeconds: 21600
     triggers:
-      - type: ImageChange
-        imageChangeParams:
-          automatic: true
-          containerNames:
-            - hollandaise-api
-          from:
-            kind: ImageStreamTag
-            namespace: ec1236-test
-            name: 'hollandaise-api:latest'
-          lastTriggeredImage: >-
-            image-registry.openshift-image-registry.svc:5000/ec1236-test/hollandaise-api@sha256:05ec4a90a29961094f571a2cc877e962d72b58a0c92bd1944b4bdd30335fc9cf
       - type: ConfigChange
     replicas: 1
     revisionHistoryLimit: 10
