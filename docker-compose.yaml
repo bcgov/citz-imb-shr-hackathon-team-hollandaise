@@ -16,6 +16,7 @@ services:
     build:
       context: ./src/backend
       dockerfile: .docker/Dockerfile
+      target: prod
     environment:
       - ENVIRONMENT=${ENVIRONMENT:-local}
       - DEBUG=${DEBUG:-false}
