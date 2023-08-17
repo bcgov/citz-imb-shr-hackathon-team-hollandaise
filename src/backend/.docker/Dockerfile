@@ -41,6 +41,8 @@ WORKDIR /app
 COPY --from=prod-build /usr/src/app/package.json ./package.json
 RUN npm i
 
+RUN chown 900:900 ~/.npm/_cacache
+
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
 
