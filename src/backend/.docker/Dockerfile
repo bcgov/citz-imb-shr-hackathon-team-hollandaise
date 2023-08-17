@@ -41,6 +41,8 @@ WORKDIR /app
 COPY --from=prod-build /usr/src/app/package.json ./package.json
 RUN npm i
 
+RUN npm cache clean --force
+
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
 
