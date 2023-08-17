@@ -5,11 +5,12 @@ import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import config from './config';
-import { keycloak } from '@bcgov/keycloak-express';
+import { keycloak, protectedRoute } from '@bcgov/keycloak-express';
 import { activateUser } from './src/utils';
 
 import { default as healthRouter } from './src/modules/health/router';
 import { default as configRouter } from './src/modules/config/router';
+import { default as salaryAssessmentRouter } from './src/modules/salaryAssessment/router';
 
 const { OPENAPI_OPTIONS, CORS_OPTIONS, RATE_LIMIT_OPTIONS } = config;
 
@@ -42,5 +43,6 @@ app.disable('x-powered-by');
 // Routing
 app.use('/health', healthRouter);
 app.use('/config', configRouter);
+app.use('/salaryAssessment', protectedRoute(), salaryAssessmentRouter);
 
 export default app;
