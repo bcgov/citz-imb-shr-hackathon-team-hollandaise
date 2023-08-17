@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Authenticated from './components/Authenticated';
-import './index.css';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Authenticated from '@/components/Authenticated';
+import '@/index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function App() {

@@ -1,2 +1,2 @@
-export * from './getSalaryAssessment';
-export * from './postSalaryAssessment'
+export * from '@/api/getSalaryAssessment';
+export * from '@/api/postSalaryAssessment'
