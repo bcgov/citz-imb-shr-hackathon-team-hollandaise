@@ -1,50 +1,30 @@
 FROM node:18.9-alpine as base
 
-# Create an app directory
-WORKDIR /usr/src/app
-
-# Copy files - ignores files from .dockerignore file.
-COPY . .
-
-# ================================= #
-# 🐳🐳       DEV BUILD       🐳🐳 #
-# ================================= #
-FROM base as dev
-ENV NODE_ENV=development
-
-# Npm install packages.
-RUN npm i
-
-# Nodemon Entrypoint.
-CMD ["npm", "run", "dev"]
-
-# ================================= #
-# 🐳🐳   [1/2] PROD BUILD    🐳🐳 #
-# ================================= #
-FROM base as prod-build
-
-# Npm install typescript for build command.
-RUN npm i typescript@4.9.5
-
-# Convert typescript code to JavaScript.
-RUN npm run build
-
-# ================================= #
-# 🐳🐳       [2/2] PROD      🐳🐳 #
-# ================================= #
-FROM node:18.9-alpine as prod
-ENV NODE_ENV=production
-
 WORKDIR /app
 
-# Npm install packages. Omits dev dependencies when NODE_ENV=production
-COPY --from=prod-build /usr/src/app/package.json ./package.json
-RUN npm i
+# Copy package.json and package-lock.json
+COPY package*.json ./
+RUN npm install
 
-# Copy build files.
-COPY --from=prod-build /usr/src/app/build .
+# Copy application source code
+COPY . .
 
-RUN chown -R 1013720000:0 "."
+# Build the application
+RUN npm run build
 
-# Node Entrypoint.
-CMD ["node","index.js"]
+# Stage 2: Create the production image
+FROM node:18.9-alpine as production
+WORKDIR /app
+
+# Copy the built application from the build stage
+COPY --from=build /app/dist ./dist
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm install --production
+
+# Expose the port that the application will listen on
+EXPOSE 3000
+
+# Command to run the application
+CMD [ "node", "dist/index.js" ]
