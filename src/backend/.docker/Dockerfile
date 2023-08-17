@@ -24,7 +24,7 @@ CMD ["npm", "run", "dev"]
 FROM base as prod-build
 
 # Npm install typescript for build command.
-RUN npm i typescript@4.9.5
+RUN npm i
 
 # Convert typescript code to JavaScript.
 RUN npm run build
@@ -40,12 +40,9 @@ WORKDIR /usr/src/app
 # Npm install packages. Omits dev dependencies when NODE_ENV=production
 COPY --from=prod-build /usr/src/app/package.json ./package.json
 
-RUN npm i
-
 # Copy build files.
-COPY --from=prod-build /usr/src/app/build .
-
-RUN chown -R 1001:0 "~/.npm"
+COPY --from=prod-build /usr/src/app/build/ .
+COPY --from=prod-build /usr/src/app/node_modules ./node_modules
 
 # Node Entrypoint.
 CMD ["node","index.js"]
