@@ -111,3 +111,18 @@ parameters:
     name: APPLICATION_NAME
     required: true
     value: hollandaise-api
+  - description: License Plate
+    displayName: License Plate
+    name: LICENSE_PLATE
+    required: false
+    value: ec1236
+  - description: Environment
+    displayName: Environment
+    name: ENVIRONMENT
+    required: false
+    value: test
+  - description: ImageStream
+    displayName: ImageStream
+    name: IMAGESTREAM
+    required: false
+    value: hollandaise-api
