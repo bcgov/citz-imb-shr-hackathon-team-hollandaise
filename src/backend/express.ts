@@ -40,6 +40,8 @@ app.use(cookieParser());
 // Disabled because it exposes information about the used framework to potential attackers.
 app.disable('x-powered-by');
 
+app.enable('trust proxy');
+
 // Routing
 app.use('/health', healthRouter);
 app.use('/config', configRouter);
