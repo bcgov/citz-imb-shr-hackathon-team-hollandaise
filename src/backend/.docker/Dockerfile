@@ -47,5 +47,8 @@ RUN npm i
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
 
+RUN chgrp -R 0 /usr/src/app && \
+    chmod -R g=u /usr/src/app
+
 # Node Entrypoint.
 CMD ["node","index.js"]
