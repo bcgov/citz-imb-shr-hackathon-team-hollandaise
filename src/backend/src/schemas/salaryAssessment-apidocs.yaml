@@ -1,0 +1,62 @@
+components:
+  schemas:
+    SalaryAssessment:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the salary assessment.
+        name:
+          type: string
+          description: The name for the salary assessment.
+          example: JOHNDOE
+        current_classification:
+          type: string
+          description: The classfication for the salary assessment.
+          example: Band 1
+        current_job_title:
+          type: string
+          description: The current job title for the salaray assessment.
+          example: Director
+        current_salary:
+          type: string
+          description: The current salary of the salary assessment.
+          example: 101,000,00
+        current_organization:
+          type: string
+          description: The current origanization of the salary assessment.
+          example: Citizens Services
+        education_experience:
+          type: string
+          description: The education experience of the salary assessment.
+          example: 5
+        proposed_job_title:
+          type: string
+          description: The proposed job title of the salary assessment.
+          example: Director  
+        proposed_classification:
+          type: string
+          description: The proposed classification of the salary assessment.
+          example: Band 2 
+        proposed_appointment:
+          type: string
+          description: The proposed appointment of the salary assessment.
+          example: Temporary  
+        proposed_salary:
+          type: string
+          description: The proposed salary of the salary assessment.
+          example: 105,000,00
+        comments:
+          type: string
+          description: The comment of the salary assessment.
+          example: This is a comment 
+        createdOn:
+          type: string
+          format: date-time
+          description: The timestamp when the salary assessment was created.          
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The timestamp when the salary assessment was last updated.

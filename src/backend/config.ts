@@ -62,7 +62,7 @@ const OPENAPI_OPTIONS = {
     },
     servers: [{ url: backendUrl }],
   },
-  apis: ['./src/**/*.yaml'],
+  apis: ['./src/**/*apidocs.yaml'],
 };
 
 // Exported configuration values.
