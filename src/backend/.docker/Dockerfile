@@ -41,14 +41,10 @@ WORKDIR /app
 COPY --from=prod-build /usr/src/app/package.json ./package.json
 RUN npm i
 
-WORKDIR /app/npm-cache
-
-RUN export npm_config_cache=/app/npm-cache
-
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
 
-RUN chown 900:900 .
+RUN chown -R 1013720000:0 "."
 
 # Node Entrypoint.
 CMD ["node","index.js"]
