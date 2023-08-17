@@ -15,6 +15,8 @@ ENV NODE_ENV=development
 # Npm install packages.
 RUN npm i
 
+RUN chown -R 1001:0 "/.npm"
+
 # Nodemon Entrypoint.
 CMD ["npm", "run", "dev"]
 
@@ -28,6 +30,8 @@ RUN npm i typescript@4.9.5
 
 # Convert typescript code to JavaScript.
 RUN npm run build
+
+RUN chown -R 1001:0 "/.npm"
 
 # ================================= #
 # 🐳🐳       [2/2] PROD      🐳🐳 #
@@ -44,6 +48,8 @@ RUN npm i
 
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
+
+RUN chown -R 1001:0 "/.npm"
 
 # Node Entrypoint.
 CMD ["node","index.js"]
