@@ -46,5 +46,7 @@ RUN chown 900:900 ~/.npm/_cacache
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
 
+USER 900
+
 # Node Entrypoint.
 CMD ["node","index.js"]
