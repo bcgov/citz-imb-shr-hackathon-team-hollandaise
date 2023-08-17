@@ -44,7 +44,7 @@ RUN npm i
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
 
-RUN chown 900:900 /usr/src/app/build
+RUN chown 900:900 .
 
 # Node Entrypoint.
 CMD ["node","index.js"]
