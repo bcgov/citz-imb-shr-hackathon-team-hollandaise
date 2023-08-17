@@ -7,9 +7,10 @@ export type SalaryAssessment = {
   current_salary: number;
   current_organization: string;
   education_experience: string;
+  proposed_postion_number: string;
   proposed_job_title: string;
   proposed_classification: string;
-  proposed_appointment: string;
+  proposed_appointment_type: string;
   proposed_salary: number;
   comments: string;
   createdOn: Date;
