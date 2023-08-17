@@ -38,7 +38,7 @@ jobs:
       # Build the DPIA API Application Image via docker-compose
       - name: Build the Docker image
         run: |
-          pwd
+          rm /home/runner/work/citz-imb-shr-hackathon-team-hollandaise/citz-imb-shr-hackathon-team-hollandaise/docker-compose.override.yaml
           docker-compose build hollandaise-api
 
       # TROUBLESHOOTING - view images present in github action run
