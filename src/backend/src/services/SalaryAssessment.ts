@@ -18,8 +18,20 @@ export const SalaryAssessmentService = () => {
     return await repository.getAll();
   };
 
+  // Add new record.
+  const createNewRecord = async (data: Partial<SalaryAssessment>) => {
+    await repository.create(data);
+  };
+
+  // Update existing record by id.
+  const updateRecordById = async (id: number, data: Partial<SalaryAssessment>) => {
+    await repository.updateById(id, data);
+  };
+
   return {
     getById,
     getAllRecords,
+    createNewRecord,
+    updateRecordById,
   };
 };
