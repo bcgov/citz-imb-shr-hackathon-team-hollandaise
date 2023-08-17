@@ -14,6 +14,11 @@ ENV NODE_ENV=development
 
 USER 900
 
+RUN chown -R 900:0 /usr/src/app && \
+    chmod -R ug+rwx /usr/src/app
+
+RUN mkdir -p /.npm && chown -R 900:0 /.npm && chmod -R ug+rwx /.npm
+
 # Npm install packages.
 RUN npm i
 
@@ -45,11 +50,6 @@ RUN npm i
 
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
-
-RUN chown -R 900:0 /usr/src/app && \
-    chmod -R ug+rwx /usr/src/app
-
-RUN mkdir -p /.npm && chown -R 900:0 /.npm && chmod -R ug+rwx /.npm
 
 # Node Entrypoint.
 CMD ["node","index.js"]
