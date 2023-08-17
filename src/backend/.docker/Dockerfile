@@ -44,9 +44,5 @@ COPY --from=prod-build /usr/src/app/package.json ./package.json
 COPY --from=prod-build /usr/src/app/build/ .
 COPY --from=prod-build /usr/src/app/node_modules ./node_modules
 
-RUN chown -R 900:0 "~/.npm"
-
-USER 900
-
 # Node Entrypoint.
 CMD ["node","index.js"]
