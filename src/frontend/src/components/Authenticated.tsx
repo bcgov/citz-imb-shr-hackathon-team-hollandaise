@@ -1,6 +1,6 @@
 import { useKeycloak } from '@bcgov/keycloak-react';
-import Table from './Table';
-import Landing from './Landing'; 
+import Table from '@/components/Table';
+import Landing from '@/components/Landing';
 
 function Authenticated() {
   const { state: authState } = useKeycloak();
