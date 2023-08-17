@@ -1,4 +1,4 @@
-FROM node:18.9-alpine as base
+FROM node:18.17-alpine as base
 
 # Create an app directory
 WORKDIR /usr/src/app
@@ -24,7 +24,7 @@ CMD ["npm", "run", "dev"]
 FROM base as prod-build
 
 # Npm install typescript for build command.
-RUN npm i typescript@4.9.5
+RUN npm i
 
 # Convert typescript code to JavaScript.
 RUN npm run build
@@ -32,17 +32,21 @@ RUN npm run build
 # ================================= #
 # 🐳🐳       [2/2] PROD      🐳🐳 #
 # ================================= #
-FROM node:18.9-alpine as prod
+FROM node:18.17-alpine as prod
 ENV NODE_ENV=production
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Npm install packages. Omits dev dependencies when NODE_ENV=production
 COPY --from=prod-build /usr/src/app/package.json ./package.json
-RUN npm i
 
 # Copy build files.
-COPY --from=prod-build /usr/src/app/build .
+COPY --from=prod-build /usr/src/app/build/ .
+COPY --from=prod-build /usr/src/app/node_modules ./node_modules
+
+RUN chown -R 900:0 "~/.npm"
+
+USER 900
 
 # Node Entrypoint.
 CMD ["node","index.js"]

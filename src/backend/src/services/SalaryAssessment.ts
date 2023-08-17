@@ -9,7 +9,7 @@ export const SalaryAssessmentService = () => {
   const repository = SalaryAssessmentRepository();
 
   // Retrieve a record by id.
-  const getById = async (id: number): Promise<SalaryAssessment | undefined | null> => {
+  const getRecordById = async (id: number): Promise<SalaryAssessment | undefined | null> => {
     return await repository.getById(id);
   };
 
@@ -18,8 +18,20 @@ export const SalaryAssessmentService = () => {
     return await repository.getAll();
   };
 
+  // Add new record.
+  const createNewRecord = async (data: Partial<SalaryAssessment>) => {
+    await repository.create(data);
+  };
+
+  // Update existing record by id.
+  const updateRecordById = async (id: number, data: Partial<SalaryAssessment>) => {
+    await repository.updateById(id, data);
+  };
+
   return {
-    getById,
+    getRecordById,
     getAllRecords,
+    createNewRecord,
+    updateRecordById,
   };
 };
