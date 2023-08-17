@@ -9,3 +9,4 @@ services:
       target: dev
     volumes:
       - ./src/frontend/src:/usr/src/app/src
+      
