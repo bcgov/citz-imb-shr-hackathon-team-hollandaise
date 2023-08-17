@@ -41,7 +41,10 @@ WORKDIR /app
 COPY --from=prod-build /usr/src/app/package.json ./package.json
 RUN npm i
 
-RUN chown 900:900 ~/.npm/_cacache
+RUN chown -R 900:0 /usr/src/app && \
+    chmod -R ug+rwx /usr/src/app
+
+RUN mkdir -p /.npm && chown -R 900:0 /.npm && chmod -R ug+rwx /.npm
 
 # Copy build files.
 COPY --from=prod-build /usr/src/app/build .
