@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["/src/*"]
     },
     "target": "ESNext",
-    "types": ["vite/client"],
-    "baseUrl": "src",
+    "types": ["vite/client", "node"],
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
