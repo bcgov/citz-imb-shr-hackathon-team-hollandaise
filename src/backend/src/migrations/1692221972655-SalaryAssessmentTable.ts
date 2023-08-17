@@ -30,7 +30,7 @@ export class SalaryAssessmentTable1692221972655 implements MigrationInterface {
           },
           {
             name: 'current_salary',
-            type: 'text',
+            type: 'integer',
             isNullable: true,
           },
           {
@@ -60,7 +60,7 @@ export class SalaryAssessmentTable1692221972655 implements MigrationInterface {
           },
           {
             name: 'proposed_salary',
-            type: 'text',
+            type: 'integer',
             isNullable: true,
           },
           {

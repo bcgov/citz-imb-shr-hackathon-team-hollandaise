@@ -2,13 +2,6 @@ import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
 export class UpdateSalAssessTypes1692293395743 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `ALTER TABLE "salary_assessment" ALTER COLUMN "current_salary" TYPE numeric`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "salary_assessment" ALTER COLUMN "proposed_salary" TYPE numeric`,
-    );
-
     const columnsToAdd = [
       new TableColumn({
         name: 'hiring_manager_display_name',
