@@ -29,7 +29,7 @@ RUN npm i typescript@4.9.5
 # Convert typescript code to JavaScript.
 RUN npm run build
 
-RUN npm cache clean --force 
+RUN chown -R 1013720000:0 "/.npm"
 
 # ================================= #
 # 🐳🐳       [2/2] PROD      🐳🐳 #
