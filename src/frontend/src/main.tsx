@@ -1,5 +1,7 @@
 import { KeycloakProvider } from '@bcgov/keycloak-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from '@/App';
@@ -10,9 +12,13 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <KeycloakProvider>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+      <MantineProvider withNormalizeCSS withGlobalStyles>
+        <QueryClientProvider client={queryClient}>
+          <ModalsProvider>
+            <App />
+          </ModalsProvider>
+        </QueryClientProvider>
+      </MantineProvider>
     </KeycloakProvider>
   </React.StrictMode>,
 );
