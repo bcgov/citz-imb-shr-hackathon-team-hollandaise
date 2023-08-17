@@ -23,7 +23,7 @@ export class SalaryAssessment {
   @Column({ type: 'text', nullable: true })
   current_job_title: string | undefined | null;
 
-  @Column({ type: 'number', nullable: true })
+  @Column({ type: 'integer', nullable: true })
   current_salary: number | undefined | null;
 
   @Column({ type: 'text', nullable: true })
@@ -44,7 +44,7 @@ export class SalaryAssessment {
   @Column({ type: 'text', nullable: true })
   proposed_appointment_type: string | undefined | null;
 
-  @Column({ type: 'number', nullable: true })
+  @Column({ type: 'integer', nullable: true })
   proposed_salary: number | undefined | null;
 
   @Column({ type: 'text', nullable: true })
