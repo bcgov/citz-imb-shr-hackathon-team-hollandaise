@@ -1,0 +1,43 @@
+paths:
+  /salaryAssessment:
+    get:
+      tags:
+        - Salary Assessment
+      summary: Get all salary assessment records
+      responses:
+        '200':
+          description: Successful response
+    put:
+      tags:
+        - Salary Assessment
+      summary: Create a new salary assessment record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewSalaryAssessment'
+      responses:
+        '201':
+          description: Record created successfully
+  /salaryAssessment/{id}:
+    get:
+      tags:
+        - Salary Assessment
+      summary: Get a salary assessment record by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: Record not found
+components:
+  schemas:
+    NewSalaryAssessment:
+      type: object
+      properties:
