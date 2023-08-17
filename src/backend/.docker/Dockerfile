@@ -12,8 +12,6 @@ COPY . .
 FROM base as dev
 ENV NODE_ENV=development
 
-USER 900
-
 # Npm install packages.
 RUN npm i
 
@@ -34,13 +32,14 @@ RUN npm run build
 # ================================= #
 # 🐳🐳       [2/2] PROD      🐳🐳 #
 # ================================= #
-FROM node:18.9-alpine as prod
+FROM node:18.17-alpine as prod
 ENV NODE_ENV=production
 
 WORKDIR /app
 
 # Npm install packages. Omits dev dependencies when NODE_ENV=production
 COPY --from=prod-build /usr/src/app/package.json ./package.json
+
 RUN npm i
 
 # Copy build files.
