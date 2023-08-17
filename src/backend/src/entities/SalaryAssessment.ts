@@ -6,6 +6,15 @@ export class SalaryAssessment {
   id!: number;
 
   @Column({ type: 'text', nullable: true })
+  hiring_manager_display_name: string | undefined | null;
+
+  @Column({ type: 'text', nullable: true })
+  hiring_manager_username: string | undefined | null;
+
+  @Column({ type: 'text', nullable: true })
+  hiring_manager_guid: string | undefined | null;
+
+  @Column({ type: 'text', nullable: true })
   name: string | undefined | null;
 
   @Column({ type: 'text', nullable: true })
@@ -14,8 +23,8 @@ export class SalaryAssessment {
   @Column({ type: 'text', nullable: true })
   current_job_title: string | undefined | null;
 
-  @Column({ type: 'text', nullable: true })
-  current_salary: string | undefined | null;
+  @Column({ type: 'number', nullable: true })
+  current_salary: number | undefined | null;
 
   @Column({ type: 'text', nullable: true })
   current_organization: string | undefined | null;
@@ -24,16 +33,19 @@ export class SalaryAssessment {
   education_experience: string | undefined | null;
 
   @Column({ type: 'text', nullable: true })
+  proposed_postion_number: string | undefined | null;
+
+  @Column({ type: 'text', nullable: true })
   proposed_job_title: string | undefined | null;
 
   @Column({ type: 'text', nullable: true })
   proposed_classification: string | undefined | null;
 
   @Column({ type: 'text', nullable: true })
-  proposed_appointment: string | undefined | null;
+  proposed_appointment_type: string | undefined | null;
 
-  @Column({ type: 'text', nullable: true })
-  proposed_salary: string | undefined | null;
+  @Column({ type: 'number', nullable: true })
+  proposed_salary: number | undefined | null;
 
   @Column({ type: 'text', nullable: true })
   comments: string | undefined | null;

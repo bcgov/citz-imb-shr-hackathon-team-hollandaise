@@ -9,7 +9,7 @@ export const SalaryAssessmentService = () => {
   const repository = SalaryAssessmentRepository();
 
   // Retrieve a record by id.
-  const getById = async (id: number): Promise<SalaryAssessment | undefined | null> => {
+  const getRecordById = async (id: number): Promise<SalaryAssessment | undefined | null> => {
     return await repository.getById(id);
   };
 
@@ -29,7 +29,7 @@ export const SalaryAssessmentService = () => {
   };
 
   return {
-    getById,
+    getRecordById,
     getAllRecords,
     createNewRecord,
     updateRecordById,
