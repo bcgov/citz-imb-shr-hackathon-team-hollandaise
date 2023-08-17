@@ -12,6 +12,8 @@ COPY . .
 FROM base as dev
 ENV NODE_ENV=development
 
+USER 900
+
 # Npm install packages.
 RUN npm i
 
@@ -48,8 +50,6 @@ RUN chown -R 900:0 /usr/src/app && \
     chmod -R ug+rwx /usr/src/app
 
 RUN mkdir -p /.npm && chown -R 900:0 /.npm && chmod -R ug+rwx /.npm
-
-USER 900
 
 # Node Entrypoint.
 CMD ["node","index.js"]
