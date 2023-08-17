@@ -38,6 +38,7 @@ jobs:
       # Build the DPIA API Application Image via docker-compose
       - name: Build the Docker image
         run: |
+          rm docker-compose.override.yaml
           docker-compose build hollandaise-frontend
       
       # TROUBLESHOOTING - view images present in github action run
